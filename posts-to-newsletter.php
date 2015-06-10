@@ -372,9 +372,10 @@ function ptn_render_main_section() {
 			
 			$content.= '<h2 style="font-size:13px"><a href="' . get_permalink($article->ID) . '" style="text-decoration:none;color:#2D2D25" target="_blank">' . $article->post_title . '</a></h2>';
 			
-			$post_image = get_post_meta($article->ID, '_post_image', true);
+			$post_image = get_the_post_thumbnail( $article->ID, 'thumbnail' );
 			if ($post_image) { 
-				$content.= '<a href="' . get_permalink($article->ID) . '" target="_blank"><img src="' . wp_get_attachment_url($post_image) . '" width="345"></a>';
+				$image_attributes = wp_get_attachment_image_src(get_post_thumbnail_id( $article->ID ), 'medium');
+				$content.= '<a href="' . get_permalink($article->ID) . '" target="_blank"><img src="' . $image_attributes[0] . '" width="345"></a>';
 				
 			}
 			
