@@ -649,7 +649,7 @@ function ptn_render_create_campaign_form() {
 		}
 		echo '</select> <br /><br />';
 		
-		$subject = $post->post_title;
+		$subject = stripslashes($post->post_title);
 		$mailchimp_email = get_post_meta($post->ID, '_mailchimp_email', true);
 		$mailchimp_name = get_post_meta($post->ID, '_mailchimp_name', true);
 		$mailchimp_list_name = get_post_meta($post->ID, '_mailchimp_list_name', true);
@@ -781,7 +781,7 @@ function ptn_create_mailchimp_campaign() {
 	$type = 'regular';
 	
 	$opts['list_id'] = $_POST['_mailchimp_list_id'];
-	$opts['subject'] = $post->post_title;
+	$opts['subject'] = stripslashes($post->post_title);
 	$opts['from_email'] = $_POST['_mailchimp_email']; 
 	$opts['from_name'] = $_POST['_mailchimp_name'];
 	
@@ -811,8 +811,8 @@ function ptn_update_mailchimp_campaign() {
 	$campaign_id = get_post_meta($post->ID, '_mailchimp_campaign_id', true);
 	
 	$api = ptn_setup_mailchimp_api();
-	$api->campaignUpdate($campaign_id, 'subject', $_POST['post_title']);
-	$api->campaignUpdate($campaign_id, 'title', $_POST['post_title']);
+	$api->campaignUpdate($campaign_id, 'subject', stripslashes($_POST['post_title']));
+	$api->campaignUpdate($campaign_id, 'title', stripslashes($_POST['post_title']));
 	$api->campaignUpdate($campaign_id, 'list_id', get_post_meta($post->ID, '_mailchimp_list_id', true));
 	$api->campaignUpdate($campaign_id, 'from_email', get_post_meta($post->ID, '_mailchimp_email', true));
 	$api->campaignUpdate($campaign_id, 'from_name', get_post_meta($post->ID, '_mailchimp_name', true));
