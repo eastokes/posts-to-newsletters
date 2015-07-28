@@ -336,8 +336,9 @@ function ptn_render_featured_post() {
 	if ( $featured ) {
 		$featured_post = get_post($featured);
 		$featured_link = get_permalink($featured);
+		$post_thumbnail_id = get_post_thumbnail_id($featured);
 	
-	    $content = '<h1 style="color:#D06D19;font-size:14px;margin:0 0 10px 0"><a href="';
+	    	$content = '<h1 style="color:#D06D19;font-size:14px;margin:0 0 10px 0"><a href="';
 		
 		$content.= get_permalink($featured);
 		
@@ -346,6 +347,11 @@ function ptn_render_featured_post() {
 		$content.= $featured_post->post_title;
 		
 		$content.= '</a></h1>';
+
+		if ($post_thumbnail_id) {
+			$post_thumbnail_url = wp_get_attachment_image_src( $post_thumbnail_id, 'medium' );
+			$content.= '<p dir="rtl" style="margin: 1em 0;padding: 0;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-family: Helvetica;font-size: 15px;line-height: 150%;text-align: left;"><a href="' . get_permalink($featured) . '" target="_blank" style="word-wrap: break-word;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #6DC6DD;font-weight: normal;text-decoration: underline;"><img align="left" height="127" src="' . $post_thumbnail_url[0] . '" style="width: 200px; height: 127px; margin: 0px 5px 5px 0px;" width="200"></a></p>';
+		}
 					
 		$content.= ptn_shorten_string(strip_tags($featured_post->post_content), 150); //echo $featured_post->post_content;
 					
